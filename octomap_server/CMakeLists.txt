@@ -6,10 +6,14 @@ project(octomap_server)
 # TODO: remove all from COMPONENTS that are not catkin packages.
 find_package(catkin REQUIRED COMPONENTS visualization_msgs sensor_msgs
     pcl_ros nav_msgs arm_navigation_msgs std_msgs std_srvs octomap_ros
-    dynamic_reconfigure octomap octomap_msgs dynamic_reconfigure nodelet
+    dynamic_reconfigure octomap_msgs dynamic_reconfigure nodelet
     pcl_conversions)
 
 generate_dynamic_reconfigure_options(${PROJECT_SOURCE_DIR}/cfg/OctomapServer.cfg)
+
+find_package(octomap REQUIRED)
+
+find_package(PCL REQUIRED)
 
 catkin_package(
     DEPENDS visualization_msgs sensor_msgs pcl_ros nav_msgs arm_navigation_msgs
@@ -19,43 +23,17 @@ catkin_package(
     INCLUDE_DIRS # TODO include
     LIBRARIES # TODO
 )
-# include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS})
-# CATKIN_MIGRATION: removed during catkin migration
-# cmake_minimum_required(VERSION 2.4.6)
 
-# CATKIN_MIGRATION: removed during catkin migration
-# include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
-
-# Set the build type.  Options are:
-#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
-#  Debug          : w/ debug symbols, w/o optimization
-#  Release        : w/o debug symbols, w/ optimization
-#  RelWithDebInfo : w/ debug symbols, w/ optimization
-#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
-#set(CMAKE_BUILD_TYPE RelWithDebInfo)
-#set(ROS_BUILD_TYPE Release)
-
-
-# CATKIN_MIGRATION: removed during catkin migration
-# rosbuild_init()
-
-find_package(octomap REQUIRED)
-include_directories(${OCTOMAP_INCLUDE_DIRS})
-link_directories(${OCTOMAP_LIBRARY_DIRS})
-add_definitions(-DOCTOMAP_NODEBUGOUT)
-
-find_package(PCL REQUIRED)
 include_directories(${PCL_INCLUDE_DIRS} include cfg/cpp)
 include_directories(${catkin_INCLUDE_DIRS})
 
-#find_package(nodelet REQUIRED)
-#include_directories(${nodelet_INCLUDE_DIRS})
+add_definitions(-DOCTOMAP_NODEBUGOUT)
 
 link_libraries(
   ${PROJECT_NAME}
   ${PCL_COMMON_LIBRARIES}
   ${OCTOMAP_LIBRARIES}
-   ${nodelet_LIBRARIES}
+  ${nodelet_LIBRARIES}
 )
 
 #set the default path for built executables to the "bin" directory
