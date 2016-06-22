@@ -53,7 +53,7 @@
 #include <octomap_server/OctomapServerConfig.h>
 
 #include <pcl/point_types.h>
-#include <pcl/ros/conversions.h>
+#include <pcl_conversions/pcl_conversions.h>
 #include <pcl_ros/transforms.h>
 #include <pcl/sample_consensus/method_types.h>
 #include <pcl/sample_consensus/model_types.h>
